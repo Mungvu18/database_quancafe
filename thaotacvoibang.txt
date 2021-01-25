@@ -1,0 +1,30 @@
+create database ThaoTacVoiBang;
+use ThaoTacVoiBang;
+create table contacts(
+    contact_id int(11) not null auto_increment,
+    last_name varchar(30) not null,
+    first_name varchar(25),
+    birthday date,
+    CONSTRAINT  contacts_pk primary key (contact_id)
+);
+create table suppliers(
+    suppliers_id int(11) not null auto_increment,
+    suppliers_name varchar(50) not null,
+    account_rep varchar(30) not null default 'TBD',
+    constraint suppliers_pk primary key (suppliers_id)
+);
+-- xóa bẳng customer dùng syntex drop table table_name;
+-- chỉnh sửa bảng câu lệnh alter table được sử dụng để chỉnh sửa một bảng đang tồn tội
+-- cú pháp để thêm mới một cột là alter table table_name add new_column_name column_definition;
+-- table_name là tên mới của cột column_definition là các mô tả mới cho cột
+-- thêm cột last_name cho bảng contacts
+alter table contacts
+add full_name nvarchar(40) not null
+after contact_id;
+alter table contacts add number_phone int(10) not null unique;
+alter table contacts add cot1 float(10) not null default (1), add cot2 int not null;
+-- xóa một cột trong bảng
+alter table contacts drop column cot1;
+alter table contacts change column cot2 cot3 float(10);
+-- cú pháp đổi tên bảng syntax alter table table_name rename to new_name;
+alter table contacts rename to people;
