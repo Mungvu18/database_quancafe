@@ -1,0 +1,69 @@
+create database quanlycafe;
+use quanlycafe;
+create table category(
+    id int primary key auto_increment not null,
+    name nvarchar(50) not null
+);
+create table product(
+    id int primary key auto_increment not null,
+    title nvarchar(50),
+    price float not null,
+    description text null,
+    id_category int references category(id)
+);
+
+create table staff(
+    id int primary key auto_increment,
+    fullName nvarchar(50),
+    address nvarchar(50),
+    gender nvarchar(15),
+    birthday datetime,
+    phone_number nvarchar(20)
+);
+create table customer(
+    id int primary key auto_increment not null ,
+    fullName nvarchar(50),
+    phone_number nvarchar(20),
+    email nvarchar(100)
+);
+create table orders(
+    id int primary key auto_increment not null,
+    customer_id int references customer(id),
+    staff_id int references staff(id),
+    price_total float
+);
+alter table orders add create_at datetime;
+alter table customer modify fullName nvarchar(25);
+create table ordersdetail(
+    id int primary key auto_increment not null,
+    order_id int references product(id),
+    price float,
+    num int,
+    price_total float
+);
+-- đã thiết kế xong bảng datebase
+-- nhập liệu mẫu cho database
+insert into category (name) values ('cafe'), ('nước ép'), ('sinh tố');
+select * from category;
+insert into product(title, price, id_category) values
+('cafe sữa', 32000,1),
+('cafe đá', 29000,1),
+('cafe nóng', 49000,1),
+('nước ép ổi', 59000,1),
+('nước ép cam', 59000,1);
+insert into staff(fullName, address, gender, birthday, phone_number) values
+('trần văn kiên', 'nam định','nam', '1991-10-10',0949288546),
+('vũ văn mừng', 'nam định','nam', '1991-07-09',0979643107);
+insert into customer(fullName, phone_number, email) VALUES
+('nguyen van a','123','@gag'),
+('nguyen van b','1023','@gag');
+insert into orders( customer_id, staff_id, price_total) VALUES
+(1,1, 96000);
+update orders set create_at = '2020-08-20' where id = 1;
+insert into ordersdetail(order_id, price, num, price_total) values
+(1,1,32,3,96000);
+
+
+
+
+
